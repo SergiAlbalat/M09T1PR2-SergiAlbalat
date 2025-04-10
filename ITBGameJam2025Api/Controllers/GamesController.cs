@@ -1,6 +1,7 @@
 ﻿using ITBGameJam2025Api.Data;
 using ITBGameJam2025Api.DTOs;
 using ITBGameJam2025Api.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,7 @@ namespace ITBGameJam2025Api.Controllers
         {
             _context = context;
         }
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Game>>> GetGames()
         {
@@ -26,7 +28,9 @@ namespace ITBGameJam2025Api.Controllers
             }
             return Ok(games);
         }
-        [HttpPost]
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("Insert")]
         public async Task<ActionResult<Game>> PostGame(GameDTO gameDTO)
         {
             Game game = new Game
@@ -40,7 +44,9 @@ namespace ITBGameJam2025Api.Controllers
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetGames), game);
         }
-        [HttpPut]
+
+        [Authorize(Roles = "Admin")]
+        [HttpPut("Update")]
         public async Task<ActionResult<Game>> PutGame(Game game)
         {
             Game gameToUpdate = await _context.Games.FirstOrDefaultAsync(x => x.Id == game.Id);
@@ -51,7 +57,9 @@ namespace ITBGameJam2025Api.Controllers
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetGames), game);
         }
-        [HttpDelete]
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("Delete")]
         public async Task<ActionResult<Game>> DeleteGame(Game game)
         {
             _context.Games.Remove(game);
