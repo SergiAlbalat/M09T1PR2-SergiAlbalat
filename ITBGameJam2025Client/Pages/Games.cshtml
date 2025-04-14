@@ -1,0 +1,17 @@
+﻿@page
+@model ITBGameJam2025Client.Pages.GamesModel
+@{
+	ViewData["Title"] = "Games";
+}
+<div class="flex-display flex-lg-wrap">
+	@if(!Model.Games.Any()){
+		<p>No hi ha jocs</p>
+	}else{
+		@foreach(var game in Model.Games){
+			<div class="flex-display flex-column p-4 text-center">
+				<img src="@game.Image" class="game-img"/>
+				<p>@game.Title</p>
+			</div>
+		}
+	}
+</div>
