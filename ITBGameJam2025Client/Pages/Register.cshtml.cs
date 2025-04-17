@@ -4,20 +4,19 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ITBGameJam2025Client.Pages
 {
-    public class LoginModel : PageModel
+    public class RegisterModel : PageModel
     {
         private readonly IHttpClientFactory _httpClient;
-        private readonly ILogger<LoginModel> _logger;
+        private readonly ILogger<RegisterModel> _logger;
         [BindProperty]
-        public LoginDTO Login { get; set; } = new();
+        public RegisterDTO Register { get; set; } = new();
         public string? ErrorMessage { get; set; }
 
-        public LoginModel(IHttpClientFactory httpClient, ILogger<LoginModel> logging)
+        public RegisterModel(IHttpClientFactory httpClient, ILogger<RegisterModel> logger)
         {
             _httpClient = httpClient;
-            _logger = logging;
+            _logger = logger;
         }
-
         public void OnGet()
         {
         }
@@ -29,28 +28,22 @@ namespace ITBGameJam2025Client.Pages
             try
             {
                 var client = _httpClient.CreateClient("GamesApi");
-                var response = await client.PostAsJsonAsync("api/Auth/login", Login);
+                var response = await client.PostAsJsonAsync("api/Auth/register", Register);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var token = await response.Content.ReadAsStringAsync();
-
-                    if (!string.IsNullOrEmpty(token))
-                    {
-                        HttpContext.Session.SetString("AuthToken", token);
-                        _logger.LogInformation("Login susccesfull");
-                        return RedirectToPage("/Index");
-                    }
+                    _logger.LogInformation("Register susccesfull");
+                    return RedirectToPage("/Index");
                 }
                 else
                 {
-                    _logger.LogInformation("Login failed");
-                    ErrorMessage = "Credencials incorrectes o accés no autoritzat.";
+                    _logger.LogInformation("Register failed");
+                    ErrorMessage = "Hi ha hagut un error.";
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error durant el login");
+                _logger.LogError(ex, "Error durant el registre");
                 ErrorMessage = "Error inesperat. Torna-ho a intentar.";
             }
             return Page();
