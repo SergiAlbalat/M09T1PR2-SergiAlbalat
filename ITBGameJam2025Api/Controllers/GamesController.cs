@@ -29,6 +29,17 @@ namespace ITBGameJam2025Api.Controllers
             return Ok(games);
         }
 
+        [HttpGet("{Id}")]
+        public async Task<ActionResult<Game>> GetGame(int Id)
+        {
+            var game = await _context.Games.FirstOrDefaultAsync(x => x.Id == Id);
+            if (game == null)
+            {
+                return NotFound("Game not found");
+            }
+            return Ok(game);
+        }
+
         [Authorize(Roles = "Admin")]
         [HttpPost("Insert")]
         public async Task<ActionResult<Game>> PostGame(GameDTO gameDTO)
