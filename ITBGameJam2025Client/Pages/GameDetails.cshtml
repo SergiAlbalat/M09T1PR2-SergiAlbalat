@@ -1,0 +1,15 @@
+﻿@page
+@model ITBGameJam2025Client.Pages.GameDetailsModel
+@{
+	ViewData["Title"] = "Detalls del joc";
+}
+<div class="text-center">
+	<h1 class="display-4">@Model.Game.Title</h1>
+</div>
+<div class="row row-cols-2">
+	<img src="@Model.Game.Image" alt="Game Image" class="game-img-detailed"/>
+	<div>
+		<p>Fet per: @Model.Game.Developer</p>
+		<p>Descripció: @Model.Game.Description</p>
+	</div>
+</div>

@@ -5,23 +5,29 @@ using System.Text.Json;
 
 namespace ITBGameJam2025Client.Pages
 {
-    public class IndexModel : PageModel
+    public class GameDetailsModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
         private readonly IHttpClientFactory _httpClientFactory;
-        public List<GameDTO> Games { get; set; } = new List<GameDTO>();
-        public IndexModel(ILogger<IndexModel> logger, IHttpClientFactory httpClientFactory)
+
+        public GameDTO Game { get; set; } = new GameDTO();
+
+        public GameDetailsModel(ILogger<IndexModel> logger, IHttpClientFactory httpClientFactory)
         {
             _logger = logger;
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task OnGet()
+        public void OnGet()
+        {
+        }
+
+        public async Task OnGetGame(int id)
         {
             var client = _httpClientFactory.CreateClient("GamesApi");
             try
             {
-                var response = await client.GetAsync("api/Games");
+                var response = await client.GetAsync($"api/Games/{id}");
                 if (response == null || !response.IsSuccessStatusCode)
                 {
                     _logger.LogError("Error al carregar les dades de Games");
@@ -29,17 +35,13 @@ namespace ITBGameJam2025Client.Pages
                 else
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    Games = JsonSerializer.Deserialize<List<GameDTO>>(json, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                    Game = JsonSerializer.Deserialize<GameDTO>(json, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
                 }
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
             }
-        }
-        public IActionResult OnPostGameInfo(int id)
-        {
-            return RedirectToPage("GameDetails", "Game", new { id = id });
         }
     }
 }
