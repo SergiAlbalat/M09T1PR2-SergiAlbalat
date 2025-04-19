@@ -43,5 +43,10 @@ namespace ITBGameJam2025Client.Pages
                 _logger.LogError(ex.Message);
             }
         }
+
+        public IActionResult OnPostVote(int gameId)
+        {
+            return RedirectToPage("Index");
+        }
     }
 }
