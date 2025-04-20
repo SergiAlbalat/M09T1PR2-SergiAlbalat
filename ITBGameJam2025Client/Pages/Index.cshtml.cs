@@ -39,7 +39,7 @@ namespace ITBGameJam2025Client.Pages
         }
         public IActionResult OnPostGameInfo(int id)
         {
-            return RedirectToPage("GameDetails", "Game", new { id = id });
+            return RedirectToPage("GameDetails", new { id = id });
         }
     }
 }
