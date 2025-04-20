@@ -1,14 +1,10 @@
 ﻿@page
 @model ITBGameJam2025Client.Pages.UsersXatModel
 @{
-	ViewData["Title"] = "Xat d'Usuaris";
+    ViewData["Title"] = "Xat d'Usuaris";
 }
 
 <h2>Xat d'Usuaris</h2>
-
-<label for="usuari">Nom:</label>
-<input id="usuari" placeholder="Nom d'usuari" />
-<br />
 
 <label for="missatge">Missatge:</label>
 <input id="missatge" placeholder="Escriu un missatge" />
@@ -39,7 +35,7 @@
 
         // Enviar missatge al servidor
         function enviaMissatge() {
-            const usuari = document.getElementById("usuari").value;
+            const usuari = @Model.UserName;
             const missatge = document.getElementById("missatge").value;
             connexio.invoke("EnviaMissatge", usuari, missatge)
                 .catch(err => console.error("Error en enviar:", err));
