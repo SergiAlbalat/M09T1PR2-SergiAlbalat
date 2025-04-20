@@ -17,7 +17,7 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
     {
-        policy.WithOrigins("https://localhost:7025"); //Adreça del client Razor
+        policy.WithOrigins("https://localhost:7087"); //Adreça del client Razor
         policy.AllowAnyHeader();
         policy.AllowAnyMethod();
         policy.AllowCredentials();
