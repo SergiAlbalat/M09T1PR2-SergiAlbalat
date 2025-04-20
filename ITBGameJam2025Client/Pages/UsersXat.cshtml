@@ -35,7 +35,7 @@
 
         // Enviar missatge al servidor
         function enviaMissatge() {
-            const usuari = @Model.UserName;
+            const usuari = "@Model.UserName";
             const missatge = document.getElementById("missatge").value;
             connexio.invoke("EnviaMissatge", usuari, missatge)
                 .catch(err => console.error("Error en enviar:", err));
