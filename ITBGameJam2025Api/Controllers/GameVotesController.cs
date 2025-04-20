@@ -20,7 +20,7 @@ namespace ITBGameJam2025Api.Controllers
 
         [Authorize]
         [HttpPost("Vote")]
-        public async Task<ActionResult> PostVote(int gameId)
+        public async Task<ActionResult> PostVote([FromBody]int gameId)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var gameVote = new GameVote
@@ -35,7 +35,7 @@ namespace ITBGameJam2025Api.Controllers
 
         [Authorize]
         [HttpPost("Unvote")]
-        public async Task<ActionResult> PostUnvote(int gameId)
+        public async Task<ActionResult> PostUnvote([FromBody]int gameId)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var gameVote = await _context.GameVotes.FirstOrDefaultAsync(x => x.GameId == gameId && x.UserId == userId);
