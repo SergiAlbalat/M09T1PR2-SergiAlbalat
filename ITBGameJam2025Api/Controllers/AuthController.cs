@@ -1,5 +1,6 @@
 ﻿using ITBGameJam2025Api.DTOs;
 using ITBGameJam2025Api.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Migrations.Operations.Builders;
@@ -37,7 +38,7 @@ namespace ITBGameJam2025Api.Controllers
         [HttpPost("admin/register")]
         public async Task<IActionResult> RegisterAdmin([FromBody] RegisterDTO userDTO)
         {
-            var user = new User { UserName = userDTO.Email, Email = userDTO.Email, Name = userDTO.Name, Surname = userDTO.Surname };
+            var user = new User { UserName = userDTO.Name, Email = userDTO.Email, Name = userDTO.Name, Surname = userDTO.Surname };
             var result = await _userManager.CreateAsync(user, userDTO.Password);
             var roleResult = new IdentityResult();
             if (result.Succeeded)
@@ -91,6 +92,14 @@ namespace ITBGameJam2025Api.Controllers
                 signingCredentials: creds
             );
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        [Authorize]
+        [HttpGet("GetName")]
+        public async Task<IActionResult> GetName()
+        {
+            var userName = User.FindFirst(ClaimTypes.Name).Value;
+            return Ok(userName);
         }
     }
 }
