@@ -1,4 +1,5 @@
 using ITBGameJam2025Api.Data;
+using ITBGameJam2025Api.HUBs;
 using ITBGameJam2025Api.Model;
 using ITBGameJam2025Api.Tools;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -10,6 +11,20 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//Afegim política de CORS (cross-origin resource sharing)
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("https://localhost:7025"); //Adreça del client Razor
+        policy.AllowAnyHeader();
+        policy.AllowAnyMethod();
+        policy.AllowCredentials();
+    });
+});
+
+builder.Services.AddSignalR(); // Registrar serveis de SignalR
 
 builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
@@ -91,6 +106,10 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
 var app = builder.Build();
+
+app.UseCors();
+
+app.MapHub<XatHub>("/xat");
 
 using (var scope = app.Services.CreateScope())
 {
