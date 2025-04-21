@@ -33,6 +33,10 @@ namespace ITBGameJam2025Client.Pages
             }
         }
 
+        /// <summary>
+        /// Method for redirecting to the index page
+        /// </summary>
+        /// <returns>The index page</returns>
         private IActionResult GoIndex()
         {
             return RedirectToPage("index");

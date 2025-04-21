@@ -22,6 +22,10 @@ namespace ITBGameJam2025Client.Pages
         {
         }
 
+        /// <summary>
+        /// Method for logging in the user
+        /// </summary>
+        /// <returns>A cookie with the user session token and the index page if did correctly</returns>
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)

@@ -37,6 +37,12 @@ namespace ITBGameJam2025Client.Pages
                 _logger.LogError(ex.Message);
             }
         }
+
+        /// <summary>
+        /// Method for redirecting to the game details page
+        /// </summary>
+        /// <param name="id">The id of the game that the user wants details</param>
+        /// <returns>The page with the details</returns>
         public IActionResult OnPostGameInfo(int id)
         {
             return RedirectToPage("GameDetails", new { id = id });
