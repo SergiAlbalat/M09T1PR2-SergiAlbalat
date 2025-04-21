@@ -4,6 +4,11 @@ namespace ITBGameJam2025Api.Tools
 {
     public static class RoleTools
     {
+        /// <summary>
+        /// Method for creating the initial roles
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <returns></returns>
         public static async Task CrearRolsInicials(IServiceProvider serviceProvider)
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();

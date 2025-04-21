@@ -24,6 +24,11 @@ namespace ITBGameJam2025Api.Controllers
             _userManager = userManager;
             _configuration = configuration;
         }
+        /// <summary>
+        /// Method for registering a new user
+        /// </summary>
+        /// <param name="userDTO">The data for the new entry</param>
+        /// <returns></returns>
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDTO userDTO)
         {
@@ -35,6 +40,12 @@ namespace ITBGameJam2025Api.Controllers
             }
             return BadRequest(result.Errors);
         }
+
+        /// <summary>
+        /// Method for registering a new admin
+        /// </summary>
+        /// <param name="userDTO">The data for the new entry</param>
+        /// <returns></returns>
         [HttpPost("admin/register")]
         public async Task<IActionResult> RegisterAdmin([FromBody] RegisterDTO userDTO)
         {
@@ -51,6 +62,12 @@ namespace ITBGameJam2025Api.Controllers
             }
             return BadRequest(result.Errors);
         }
+
+        /// <summary>
+        /// Method for logging in a user
+        /// </summary>
+        /// <param name="userDTO">The data that the user have input for log in</param>
+        /// <returns>A token with the user session</returns>
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDTO userDTO)
         {
@@ -75,6 +92,12 @@ namespace ITBGameJam2025Api.Controllers
             var token = CreateToken(claims.ToArray());
             return Ok(token);
         }
+
+        /// <summary>
+        /// Method for creating a JWT token
+        /// </summary>
+        /// <param name="claims">The claims of the new token</param>
+        /// <returns>The token in string format</returns>
         private string CreateToken(Claim[] claims)
         {
             var jwtConfig = _configuration.GetSection("JwtSettings");
@@ -94,6 +117,10 @@ namespace ITBGameJam2025Api.Controllers
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
+        /// <summary>
+        /// Method for getting the name of the logged user
+        /// </summary>
+        /// <returns>The name of the user</returns>
         [Authorize]
         [HttpGet("GetName")]
         public async Task<IActionResult> GetName()
