@@ -21,6 +21,10 @@ namespace ITBGameJam2025Client.Pages
         {
         }
 
+        /// <summary>
+        /// Method for registering a new user
+        /// </summary>
+        /// <returns>The index page if did correctly</returns>
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
