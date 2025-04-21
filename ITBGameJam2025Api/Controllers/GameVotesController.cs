@@ -18,6 +18,11 @@ namespace ITBGameJam2025Api.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Method for inserting a new vote
+        /// </summary>
+        /// <param name="gameId">The id of the game voted</param>
+        /// <returns></returns>
         [Authorize]
         [HttpPost("Vote")]
         public async Task<ActionResult> PostVote([FromBody]int gameId)
@@ -33,6 +38,11 @@ namespace ITBGameJam2025Api.Controllers
             return CreatedAtAction(nameof(PostVote), gameVote);
         }
 
+        /// <summary>
+        /// Method for removing a vote
+        /// </summary>
+        /// <param name="gameId">The id of the game unvoted</param>
+        /// <returns></returns>
         [Authorize]
         [HttpPost("Unvote")]
         public async Task<ActionResult> PostUnvote([FromBody]int gameId)
@@ -48,6 +58,10 @@ namespace ITBGameJam2025Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Method for getting all votes of the logged user
+        /// </summary>
+        /// <returns>All the votes of the user in a json array</returns>
         [Authorize]
         [HttpGet("GetVotes")]
         public async Task<ActionResult<IEnumerable<GameVote>>> GetVotes()
@@ -61,6 +75,11 @@ namespace ITBGameJam2025Api.Controllers
             return Ok(gameVotes);
         }
 
+        /// <summary>
+        /// Method for getting the number of votes of a game
+        /// </summary>
+        /// <param name="gameId">The id of the game</param>
+        /// <returns>The number of votes that the game have</returns>
         [HttpGet("GetVotes/{gameId}")]
         public async Task<ActionResult<IEnumerable<GameVote>>> GetVotesByGameId(int gameId)
         {

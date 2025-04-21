@@ -18,6 +18,10 @@ namespace ITBGameJam2025Api.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Method for getting all games
+        /// </summary>
+        /// <returns>A json with all games</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Game>>> GetGames()
         {
@@ -29,6 +33,11 @@ namespace ITBGameJam2025Api.Controllers
             return Ok(games);
         }
 
+        /// <summary>
+        /// Method for getting a game by id
+        /// </summary>
+        /// <param name="Id">The identifier of the game</param>
+        /// <returns>The specified game information in json format</returns>
         [HttpGet("{Id}")]
         public async Task<ActionResult<Game>> GetGame(int Id)
         {
@@ -40,6 +49,11 @@ namespace ITBGameJam2025Api.Controllers
             return Ok(game);
         }
 
+        /// <summary>
+        /// Method for inserting a new game
+        /// </summary>
+        /// <param name="gameDTO">The game information</param>
+        /// <returns></returns>
         [Authorize(Roles = "Admin")]
         [HttpPost("Insert")]
         public async Task<ActionResult<Game>> PostGame(GameDTO gameDTO)
@@ -56,6 +70,11 @@ namespace ITBGameJam2025Api.Controllers
             return CreatedAtAction(nameof(GetGames), game);
         }
 
+        /// <summary>
+        /// Method for updating a game
+        /// </summary>
+        /// <param name="game">The game that you want to update</param>
+        /// <returns></returns>
         [Authorize(Roles = "Admin")]
         [HttpPut("Update")]
         public async Task<ActionResult<Game>> PutGame(Game game)
@@ -69,6 +88,11 @@ namespace ITBGameJam2025Api.Controllers
             return CreatedAtAction(nameof(GetGames), game);
         }
 
+        /// <summary>
+        /// Method for deleting a game
+        /// </summary>
+        /// <param name="game">The game that you want to delete</param>
+        /// <returns></returns>
         [Authorize(Roles = "Admin")]
         [HttpDelete("Delete")]
         public async Task<ActionResult<Game>> DeleteGame(Game game)
