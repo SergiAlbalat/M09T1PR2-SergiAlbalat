@@ -1,0 +1,28 @@
+﻿@page
+@model IndexModel
+@{
+	ViewData["Title"] = "Inici";
+}
+<div class="text-center">
+    <h1 class="display-4">Benvingut</h1>
+	<div class="flex-display flex-lg-wrap justify-content-center">
+		@if (!Model.Games.Any())
+		{
+			<p>No hi ha jocs</p>
+		}
+		else
+		{
+			@foreach (var game in Model.Games)
+			{
+				<form method="post" asp-handler="GameInfo">
+					<button type="submit" asp-page-handler="gameInfo" asp-route-id="@game.Id">
+						<div class="flex-display flex-column p-4 text-center">
+							<img src="@game.Image" alt="Game Image" class="game-img" />
+							<p>@game.Title</p>
+						</div>
+					</button>
+				</form>
+			}
+		}
+	</div>
+</div>

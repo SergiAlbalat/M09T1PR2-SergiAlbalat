@@ -1,0 +1,28 @@
+﻿@page
+@model ITBGameJam2025Client.Pages.GameDetailsModel
+@{
+	ViewData["Title"] = "Detalls del joc";
+}
+<div class="text-center">
+	<h1 class="display-4">@Model.Game.Title</h1>
+</div>
+<div class="row row-cols-2">
+	<img src="@Model.Game.Image" alt="Game Image" class="game-img-detailed"/>
+	<div>
+		<p>Fet per: @Model.Game.Developer</p>
+		<p>Vots: @Model.Votes</p>
+		<p>Descripció: @Model.Game.Description</p>
+		@if(Model.LoggedIn)
+		{
+			@if(Model.Voted){
+				<form method="post" asp-handler="UnVote">
+					<button type="submit" class="btn btn-primary" asp-page-handler="unvote" asp-route-gameId="@Model.Game.Id">Desvotar</button>
+				</form>
+			}else{
+				<form method="post" asp-handler="Vote">
+					<button type="submit" class="btn btn-primary" asp-page-handler="vote" asp-route-gameId="@Model.Game.Id">Votar</button>
+				</form>
+			}
+		}
+	</div>
+</div>
